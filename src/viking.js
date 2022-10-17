@@ -59,28 +59,25 @@ class War {
     this.saxonArmy.push(saxon);
   }
 
-  vikingAttack() {
-    let randomSaxon = Math.floor(Math.random() * this.saxonArmy.length);
-    let randomViking = Math.floor(Math.random() * this.saxonArmy.length);
-    let attackResult = this.saxonArmy[randomSaxon].receiveDamage(
-      this.vikingArmy[randomViking].strength
+  // BONUS
+  basicAttack(attacker, victim) {
+    let randomAttacker = Math.floor(Math.random() * attacker.length);
+    let randomVictim = Math.floor(Math.random() * victim.length);
+    let attackResult = victim[randomVictim].receiveDamage(
+      attacker[randomAttacker].strength
     );
     if (attackResult.search("died") !== -1) {
-      this.saxonArmy.splice(randomSaxon);
+      victim.splice(randomVictim);
     }
     return attackResult;
   }
 
+  vikingAttack() {
+    return this.basicAttack(this.vikingArmy, this.saxonArmy);
+  }
+
   saxonAttack() {
-    let randomSaxon = Math.floor(Math.random() * this.saxonArmy.length);
-    let randomViking = Math.floor(Math.random() * this.saxonArmy.length);
-    let attackResult = this.vikingArmy[randomViking].receiveDamage(
-      this.saxonArmy[randomSaxon].strength
-    );
-    if (attackResult.search("died") !== -1) {
-      this.vikingArmy.splice(randomViking);
-    }
-    return attackResult;
+    return this.basicAttack(this.saxonArmy, this.vikingArmy);
   }
 
   showStatus() {
